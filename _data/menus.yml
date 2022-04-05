@@ -1,0 +1,21 @@
+main:
+  - name: "技术文章"
+    url: "/services/"
+    weight: 3
+  - name: "团队"
+    url: "/team/"
+    weight: 2
+  - name: "Wiki" # 暂名
+    url: "/about/"
+    weight: 4
+  - name: "联系我们"
+    url: "/contact/"
+    weight: 5
+
+footer:
+  - name: "主页"
+    url: "/"
+    weight: 1
+  - name: "联系我们"
+    url: "/contact/"
+    weight: 2

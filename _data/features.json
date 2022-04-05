@@ -1,0 +1,29 @@
+[
+  {
+    "title": "电子枪-电子光学部(E组)",
+    "description": "电子枪设计，光路模拟",
+    "image": {
+      "url": "images/features/Electron-Gun.svg",
+      "width": 80,
+      "height": 80
+    }
+  },
+  {
+    "title": "真空-支撑结构部(V组)",
+    "description": "真空系统、外壳材料、整体结构",
+    "image": {
+      "url": "images/features/Void-Structure.svg",
+      "width": 80,
+      "height": 80
+    }
+  },
+  {
+    "title": "控制电路-软件部(C组)",
+    "description": "整体电路构造、图像处理软件（摸ing）",
+    "image": {
+      "url": "images/features/Circuit-Software.svg",
+      "width": 80,
+      "height": 80
+    }
+  }
+]
