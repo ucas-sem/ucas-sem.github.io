@@ -9,7 +9,9 @@ description: Contact
 
 # 了解我们
 
-未完待续...
+点击下载后了解更多：
+
+<a href="/assets/download/Intro_UCAS-SEM.pdf" download >UCAS-SEM介绍手册</a>
 
 ## 你能得到的
 
