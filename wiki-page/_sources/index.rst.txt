@@ -33,6 +33,7 @@
 	:maxdepth: 2
 
 	intro/preparation
+	intro/outline
 
 
 .. toctree::
@@ -40,6 +41,7 @@
 	:maxdepth: 2
 
 	articles/theory
+	articles/reference
 
 
 .. toctree::
@@ -47,5 +49,29 @@
 	:caption: 关于
 
 	about/situation
-	about/partner
+	about/team
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++
