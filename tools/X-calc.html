@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X射线简易计算讨论</title>
+    <style>
+        li a.choice
+        {
+            display: block;
+            color:  #0051cc;
+            text-align: center;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        li a.choice:hover:not(.active) {
+            text-decoration: underline;
+        }
+
+        .row {
+            /* max-width: 1260px; */
+            min-width: 755px;
+            margin-left: 20%; margin-right: 20%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header" style="width: 100%;  background-color: #b8e9fa; ">
+
+        <div class="row">
+            <ul style="list-style-type:none;  padding: 5px; margin: 0; overflow: hidden;">
+                <li style="float:left">
+                    <a href="../index.html" class="logo">
+                        <img width="120px" height="32px" alt="Ucas-sem" src="../assets/logo/logo.svg" > 
+                    </a>
+                </li>
+
+                <li  style="float:right">
+                    <a class="choice"href="./index.html">返回上一页</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+<div style="margin-left: 20%; margin-right: 20%; background-color:#FFFFFF;">
+    <h1>背景</h1>
+    <p>在具有高加速电压的电子显微镜中，电子轰击材料，会产生X射线。
+        显微镜设计缺陷、操作失误等因素可能会导致X射线泄露，危害显微镜研发者和使用者的安全。
+        因此需要估计电子显微镜中产生的X射线量级，据此制定相应的防护措施。 <br><br>
+        此网页为对X射线辐射量级计算的初步讨论，将电子枪和光阑整体看做是X射线管，根据前人X射线管能量产率计算一定电压和电流下产生的X射线，
+        并假设屏蔽材料按某一单一吸收率X射线，计算一年内操作人员受到的X射线辐射量。如有错误之处，还请批评指正。
+        （使用方法：在文本框中输入相应单位下物理量的值，不用输入单位，并点击计算按钮，得到计算结果。另外还需要您在<a target="_blank" href="https://physics.nist.gov/PhysRefData/XrayMassCoef/tab3.html">别处</a>查阅材料的质量吸收系数、密度等）
+    </p>
+    <h1>一、X射线产生和计算过程</h1>
+    <p>
+        高能电子轰击金属靶材，会产生连续X射线和特征X射线。
+        不同波长射线对于人体伤害不同。这里考虑二者的总能量。
+        把电子枪看作是一个X射线管，使用前人的X射线管的计算结果。
+    </p>
+    <h2>1、X射线管的能量效率</h2>
+    <p>
+        根据参考文献（A.H. Compton and S. K. Allison, X-Rays in Theory and Experiment, p. 89. Van Nostrand, Princeton, N.J. (1935)）第89页，X射线管中电子轰击靶材，X射线的总产率大致符合经验公式
+    </p>
+    <img src="img/eff_kZV.jpg" style="margin: 0;">
+    <p>
+        其中k为比例系数（量纲为电压的倒数），Z为靶材的原子序数，V为X射线管的工作电压。文献中接着提到了X射线产率公式中系数的具体取值：
+    </p>
+    <img src="img/ekZV.jpg" style="margin: 0;">
+    <p>
+        其中，Z为靶材（被电子轰击的物质）原子序数，V为以伏特（volt）为单位的电压值。
+    </p>
+    <!-- 书中例子如下： -->
+    <!-- <img src="img/ekZV_example.jpg"> -->
+    <p>
+        因此，可以计算X射线产生的能量效率。（在文本框中输入相应单位下物理量的值，不用输入单位，并点击计算按钮）
+    </p>
+    <span>
+        <input type="number" id="kZV_k" placeholder="系数" value="1.1e-9">
+        *
+        <input type="number" id="kZV_Z" placeholder="靶材原子序数，如42">
+        *
+        <input type="number" id="kZV_V" placeholder="电压（单位V），如150000">
+        <br>
+        <input type="button" value="计算" onclick="calcEff()">
+        <br>
+        X射线产生的能量效率为：
+        <input type="text" id="kZV_result" readonly="readonly">
+    </span>
+    <h2>2、计算X射线总能量</h2>
+    <p>
+        测量电子枪中电极的电压和束流大小，计算输入功率。（为了方便也可尝试用科学计数法格式输入，例如把1200写为1.2e3，把0.012 写为1.2e-2，也可以把150000写为150e3）
+    </p>
+    <span>
+        <!-- 电极间电压(单位V)，如150e3 ；束流大小(单位A)，如12e-6  ；
+        <br> -->
+        <input type="number" id="UI_U" placeholder="电极间电压(单位V)，如150e3  ">
+        *
+        <input type="number" id="UI_I" placeholder="束流大小(单位A)，如12  ">
+        <br>
+        <input type="button" value="计算" onclick="calcTotalP()">
+        <br>
+        总输入功率为：
+        <input type="text" id="UI_P" readonly="readonly">W(瓦特)
+        <br>
+        结合电子枪输入总功率和X射线产生效率得到X射线功率
+        <input type="button" value="计算" onclick="calcXP()">
+        <br>
+        X射线辐射功率为：
+        <input type="text" id="XP" readonly="readonly">W(瓦特)
+    </span>
+    <h2>3、估计完全没有保护时的危害</h2>
+        不考虑电子枪外壳，或者由于设计缺陷，X射线全部跑出来。60kg的人抱住被轰击的光阑（全身均匀吸收），10分钟后受到的辐射剂量当量为：
+        <input type="text" id="X_10min" readonly = "readonly">mSv（毫西弗）
+        <br>
+        <p>
+            而普通大众一年能忍受的非自然辐射剂量上限为1mSv <br>
+            （世界平均）每人每年受到的自然辐射量为2.4mSv <br>
+            辐射工作人员年有效剂量当量限值为50mSv
+        </p>
+        <p>
+            值得一提的是，由于产生的X射线光子最大能量为单个电子得到的能量，根据
+        </p>
+        <img src="img/hv_ev.jpg">
+        <p>
+            式中V为加速电压，e为电子电荷，h为普朗克常量，ν_0为最大X射线频率，c为光速，λ_0为发射的X射线的最短波长。
+            含有数字“12.4”的式中波长单位为Å，电压单位为kV。<br>
+            上述加速电压的电子显微镜辐射的最短波长为 <span id="min_lambda">()</span>nm，
+            连续谱中辐射量最多的波长约为1.5倍最短波长，即<span id="min_lambda_1_5">()</span>nm。
+        </p>
+    <h2>
+        4、补充参考
+    </h2>
+    <p>
+        辐射剂量当量的定义
+    </p>
+    <img src="img/Atomic_physics_ch9_zyh.jpg" width="80%" height="80%">
+    <p>
+        辐射剂量当量的限值
+    </p>
+    <img src="img/Sv_limit.jpg" width="80%" height="80%"><br>
+    （图片来源：中国科学院大学本科课程-郑阳恒老师原子物理课课件）
+    <h1>二、X射线在屏蔽材料中的衰减和计算过程</h1>
+    <p>产生的X射线并非单频率X射线，同种屏蔽材料对不同波长的X射线的屏蔽能力不同。也许可以查一查前人做过的实验计算一下</p>
+    <p>结果一不小心，上网搜索搜到一堆计算X射线的网页计算器，功能还挺强大，有的能直接给出各波段吸收率。
+        我就不重复造轮子了</p>
+        也许直接搜索“x ray calculator”？
+        但是我搜到的网页的目的与我们的目的——计算X射线泄漏量，并不强相关。且我搜到的那些网页都是英文。于是我还是继续写这个网页吧。
+        <br>
+        <p>可以在此网站上查阅单一材料对于具有不同能量的光子的质量吸收系数 <a target="_blank" href="https://physics.nist.gov/PhysRefData/XrayMassCoef/tab3.html">NIST-单质的质量吸收系数</a></p>
+        <p>
+            射线通过屏蔽材料，其强度随着屏蔽材料的厚度呈指数衰减。可计算透过屏蔽材料的射线强度
+        </p>
+        <img src="img/attenuation.jpg">
+        <p>其中I为透过的射线强度，I_0为初始射线强度，e为自然常数，μ/ρ为材料对相应波长X射线的质量吸收系数，ρ为材料的密度，z为材料的厚度</p>
+    <br>
+    屏蔽材料对于目标波段X射线的质量吸收系数（需要<a target="_blank" href="https://physics.nist.gov/PhysRefData/XrayMassCoef/tab3.html">查表</a>或者计算得到）<input type="number" id="mac" placeholder="单位(cm^2/g)">cm^2/g
+    <br>
+    屏蔽材料厚度<input type="number" id="thickness" placeholder="单位cm">cm
+    <br>
+    屏蔽材料密度<input type="number" id="density" placeholder="单位g/(cm^3)">g/(cm^3)
+    <br>
+    <input type="button" value="计算透过的剩余X射线强度占比" onclick="calcAtten()">
+    <input type="text"  id="attenuation" readonly="readonly">
+    <br>
+    所以在同样60kg体重，抱住有屏蔽层的光阑10分钟，受到的辐射剂量为 <br> <span id="protected_10min">()</span>mSv
+    <br>
+    每天工作8小时，每周5天，一年不间断，工作了261*8 = 2088小时 = 12528个10分钟，受到的辐射剂量为 <br> <span id="protected_year">()</span>mSv
+    
+</div>
+    <script>
+        function calcEff() {
+            var min_l = 12.4 / Number(document.getElementById("kZV_V").value / 1000);
+            document.getElementById("kZV_result").value = String(Number(document.getElementById("kZV_k").value) * 
+                                                        Number(document.getElementById("kZV_Z").value) *
+                                                        Number(document.getElementById("kZV_V").value));
+            
+            document.getElementById("min_lambda").innerHTML = String(min_l /10);
+            document.getElementById("min_lambda_1_5").innerHTML = String(min_l /10 * 1.5);
+            
+        }
+        function calcTotalP() {
+            document.getElementById("UI_P").value = String(Number(document.getElementById("UI_U").value) * 
+                                                        Number(document.getElementById("UI_I").value));
+        }
+        function calcXP() {
+            var x_power = (Number(document.getElementById("UI_P").value) * Number(document.getElementById("kZV_result").value))
+            document.getElementById("XP").value = String(x_power);
+            document.getElementById("X_10min").value = x_power * 10;
+        }
+        function calcAtten() {
+            var attenuation = Math.exp(-1*Number(document.getElementById("mac").value)*Number(document.getElementById("thickness").value)*Number(document.getElementById("density").value))
+            document.getElementById("attenuation").value = String(attenuation);
+            var newXprotected10_min = attenuation * Number(document.getElementById("X_10min").value);
+            document.getElementById("protected_10min").innerHTML = String(newXprotected10_min);
+            document.getElementById("protected_year").innerHTML = String(12528*newXprotected10_min);
+            
+        }
+        
+    </script>
+
+    <div style="width: 100%; background-color: #4f4fe1; padding: 0.5em 0;">
+        <span style="display: block; width: 100%; text-align: center; font-size: 0.8em; font-weight: 500; color: #d0f0fb; line-height: 2;">
+            版权所有: UCAS-SEM小组<br>
+            网页开发与维护: 陈卓勋 (<a class="link mail" href="mailto:chenzhuoxun20@mails.ucas.ac.cn">@Email</a>)
+        </span>
+    </div> 
+</body>
+</html>
