@@ -41,6 +41,7 @@
 	:maxdepth: 2
 
 	articles/theory
+	articles/bioland-study
 	articles/reference
 
 
