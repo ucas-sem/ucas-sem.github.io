@@ -22,7 +22,7 @@ li a.choice:hover:not(.active) {
 }
 
 .row {
-    /* max-width: 1260px; */
+    max-width: 1260px;
     min-width: 755px;
     margin-left: 20%; margin-right: 20%;
     overflow: hidden;
